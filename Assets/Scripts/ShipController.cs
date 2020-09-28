@@ -50,6 +50,8 @@ public class ShipController : MonoBehaviour
 
     private AudioSource shootSoundFX;                           // The player shooting sound effect
 
+    public float shootDelayTime = 0.15f;
+    private float timer;
 
     void Start()
     {
@@ -64,12 +66,15 @@ public class ShipController : MonoBehaviour
         activePlayerTurrets.Add(startWeapon);
         shootSoundFX = gameObject.GetComponent<AudioSource>();
         playerRigidbody = GetComponent<Rigidbody2D>();
+
+        timer = Time.time;
     }
 
     void Update()
     {
-        if (Input.GetKeyDown("space")) {
+        if (Time.time > timer + shootDelayTime) {
             Shoot();
+            timer = Time.time;
         }
         float xDir = Input.GetAxis("Horizontal");
         float yDir = Input.GetAxis("Vertical");
